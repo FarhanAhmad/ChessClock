@@ -3,9 +3,10 @@ package com.black.chessclock
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,12 +79,13 @@ fun ClockView(
     startGame: () -> Unit,
     clockAClick: () -> Unit,
     clockBClick: () -> Unit,
+    increaseGameTime: () -> Unit,
+    decreaseGameTime: () -> Unit,
     gameActionText: String,
 ) {
 
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
     ) {
 
         ClockBoardView(
@@ -93,9 +95,58 @@ fun ClockView(
         )
 
         Button(
+            modifier = Modifier.align(Alignment.Center),
             onClick = startGame
         ) {
             Text(text = gameActionText)
+        }
+
+        if (!uiState.gameInProgress)
+            GameTime(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                increaseGameTime = increaseGameTime,
+                decreaseGameTime = decreaseGameTime,
+            )
+    }
+}
+
+@Composable
+fun GameTime(
+    modifier: Modifier,
+    increaseGameTime: () -> Unit,
+    decreaseGameTime: () -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(
+            onClick = decreaseGameTime,
+            modifier = Modifier
+                .size(50.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Reduce time"
+            )
+        }
+        Text(
+            text = "Set game time",
+            modifier = Modifier.padding(8.dp),
+            fontSize = 16.sp,
+        )
+        IconButton(
+            onClick = increaseGameTime,
+            modifier = Modifier
+                .size(50.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowForward,
+                contentDescription = "Increase time"
+            )
         }
 
     }
@@ -114,6 +165,8 @@ fun ClockPreview() {
             startGame = {},
             clockAClick = {},
             clockBClick = {},
+            increaseGameTime = {},
+            decreaseGameTime = {},
             "Start",
         )
     }
