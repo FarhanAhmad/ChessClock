@@ -25,6 +25,8 @@ class MainActivity : ComponentActivity() {
                     startGame = { viewModel.onViewClicked(ClockViewModel.UiEvent.START_RESET) },
                     clockAClick = { viewModel.onViewClicked(ClockViewModel.UiEvent.CLOCK_A) },
                     clockBClick = { viewModel.onViewClicked(ClockViewModel.UiEvent.CLOCK_B) },
+                    increaseGameTime = { viewModel.onViewClicked(ClockViewModel.UiEvent.INCREASE_TIME) },
+                    decreaseGameTime = { viewModel.onViewClicked(ClockViewModel.UiEvent.DECREASE_TIME) },
                     gameActionText = if (uiState.value.gameInProgress) {
                         "reset"
                     } else {

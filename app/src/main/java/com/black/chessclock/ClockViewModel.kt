@@ -20,7 +20,10 @@ class ClockViewModel : ViewModel() {
 
     var gameJob: Job? = null
 
-    private val gameTime = 1 * 10 * 1000L
+    private var gameTime = 2 * 60 * 1000L
+
+    private val MAX_GAME_TIME = 10 * 60 * 1000L
+    private val MIN_GAME_TIME = 1 * 60 * 1000L
 
     private fun formatTime(remainingTime: Long): String {
         val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingTime).mod(60)
@@ -58,6 +61,18 @@ class ClockViewModel : ViewModel() {
                         clockARunning = true,
                         clockBRunning = false,
                     )
+                }
+            }
+            UiEvent.INCREASE_TIME -> {
+                if (gameTime < MAX_GAME_TIME) {
+                    gameTime += 60000
+                    resetClock()
+                }
+            }
+            UiEvent.DECREASE_TIME -> {
+                if (gameTime > MIN_GAME_TIME) {
+                    gameTime -= 60000
+                    resetClock()
                 }
             }
         }
@@ -152,5 +167,7 @@ class ClockViewModel : ViewModel() {
         object START_RESET : UiEvent
         object CLOCK_A : UiEvent
         object CLOCK_B : UiEvent
+        object INCREASE_TIME : UiEvent
+        object DECREASE_TIME : UiEvent
     }
 }
