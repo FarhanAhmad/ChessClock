@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.black.chessclock.ui.theme.ChessClockTheme
 
@@ -18,15 +19,44 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
+            val startGameLamda = remember {
+                {
+                    viewModel.onViewClicked(ClockViewModel.UiEvent.START_RESET)
+                }
+            }
+            val increaseGameTimeLamda = remember {
+                {
+                    viewModel.onViewClicked(ClockViewModel.UiEvent.INCREASE_TIME)
+                }
+            }
+
+            val decreaseGameTimeLamda = remember {
+                {
+                    viewModel.onViewClicked(ClockViewModel.UiEvent.DECREASE_TIME)
+                }
+            }
+
+            val clockAClickLamda = remember {
+                {
+                    viewModel.onViewClicked(ClockViewModel.UiEvent.CLOCK_A)
+                }
+            }
+
+            val clockBClickLamda = remember {
+                {
+                    viewModel.onViewClicked(ClockViewModel.UiEvent.CLOCK_B)
+                }
+            }
+
             ChessClockTheme {
                 val uiState = viewModel.uiState.collectAsState(initial = ClockState())
                 ClockView(
                     uiState = uiState.value,
-                    startGame = { viewModel.onViewClicked(ClockViewModel.UiEvent.START_RESET) },
-                    clockAClick = { viewModel.onViewClicked(ClockViewModel.UiEvent.CLOCK_A) },
-                    clockBClick = { viewModel.onViewClicked(ClockViewModel.UiEvent.CLOCK_B) },
-                    increaseGameTime = { viewModel.onViewClicked(ClockViewModel.UiEvent.INCREASE_TIME) },
-                    decreaseGameTime = { viewModel.onViewClicked(ClockViewModel.UiEvent.DECREASE_TIME) },
+                    startGame = startGameLamda,
+                    clockAClick = clockAClickLamda,
+                    clockBClick = clockBClickLamda,
+                    increaseGameTime = increaseGameTimeLamda,
+                    decreaseGameTime = decreaseGameTimeLamda,
                     gameActionText = if (uiState.value.gameInProgress) {
                         "reset"
                     } else {
@@ -35,18 +65,5 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ChessClockTheme {
-        Greeting("Android")
     }
 }
