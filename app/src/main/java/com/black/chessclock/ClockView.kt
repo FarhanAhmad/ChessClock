@@ -3,15 +3,18 @@ package com.black.chessclock
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,7 +53,7 @@ fun ClockBoardView(
                 color = if (uiState.clockATimeLeft == 0L) Color.Red else Color.LightGray,
             )
         }
-        Divider(
+        HorizontalDivider(
             color = Color.Gray,
             thickness = 2.dp,
         )
@@ -129,7 +132,7 @@ fun GameTime(
                 .size(50.dp)
         ) {
             Icon(
-                imageVector = Icons.Filled.ArrowBack,
+                imageVector = ImageVector.vectorResource(id = R.drawable.arrow_back),
                 contentDescription = "Reduce time"
             )
         }
@@ -144,7 +147,7 @@ fun GameTime(
                 .size(50.dp)
         ) {
             Icon(
-                imageVector = Icons.Filled.ArrowForward,
+                imageVector = ImageVector.vectorResource(id = R.drawable.arrow_forward),
                 contentDescription = "Increase time"
             )
         }

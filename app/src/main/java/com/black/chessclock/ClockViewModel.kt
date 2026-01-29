@@ -25,19 +25,6 @@ class ClockViewModel : ViewModel() {
     private val MAX_GAME_TIME = 10 * 60 * 1000L
     private val MIN_GAME_TIME = 1 * 60 * 1000L
 
-    private fun formatTime(remainingTime: Long): String {
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingTime).mod(60)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingTime)
-        val centiSeconds = (remainingTime - minutes.times(seconds).times(1000)).div(100).mod(10)
-
-        return String.format(
-            "%02d:%02d:%02d",
-            minutes,
-            seconds,
-            centiSeconds
-        )
-    }
-
     fun onViewClicked(event: UiEvent) {
         when (event) {
             UiEvent.START_RESET -> {
@@ -76,6 +63,19 @@ class ClockViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun formatTime(remainingTime: Long): String {
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingTime).mod(60)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingTime)
+        val centiSeconds = (remainingTime - minutes.times(seconds).times(1000)).div(100).mod(10)
+
+        return String.format(
+            "%02d:%02d:%02d",
+            minutes,
+            seconds,
+            centiSeconds
+        )
     }
 
     private fun resetClock() {
